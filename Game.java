@@ -3,8 +3,10 @@ import java.awt.BorderLayout;
 import java.awt.event.*;
 import java.awt.*;
 
-public class Game //implements ActionListener
+public class Game
 {
+	// Global variables for the GUI so they can be used in all methods - improves scope
+	
 	Racer r;
 	JButton playButton;
 	JButton stopButton;
@@ -14,14 +16,10 @@ public class Game //implements ActionListener
 	JPanel scorePanel;
 	JPanel buttonPanel;
 	
-	JFrame scoreWindow;
-	JPanel sPanel;
-	JPanel nameField;
-	JPanel highScoreList;
-	JTextField enterName;
-	
 	public Game() 
 	{
+		// The gui for the game and layout for the buttons, labels and r.getPanel, also provides an instance of racer
+		
 		window = new JFrame();
 		panel = new JPanel(new BorderLayout());
 		scorePanel = new JPanel();
@@ -45,24 +43,8 @@ public class Game //implements ActionListener
 		scorePanel.add(scoreLabel);
 		buttonPanel.add(playButton);
 		buttonPanel.add(stopButton);
-	///////////////////////////////////////////////////////////	
-		scoreWindow = new JFrame();
-		sPanel = new JPanel(new BorderLayout());
-		nameField = new JPanel();
-		highScoreList = new JPanel();
 		
-		sPanel.add(highScoreList,BorderLayout.NORTH);
-		sPanel.add(nameField,BorderLayout.SOUTH);
-		
-		enterName = new JTextField(30);
-		nameField.add(enterName);
-		
-		scoreWindow.setTitle("High Scores:");
-		scoreWindow.setSize(500,650);
-		scoreWindow.setContentPane(sPanel);
-		scoreWindow.setLocation(800,0);
-		scoreWindow.setVisible(true);
-	
+		// Action listeners below are used to start and stop the program from running
 		
 		stopButton.addActionListener(new ActionListener()
 		{public void actionPerformed(ActionEvent e){
@@ -75,12 +57,16 @@ public class Game //implements ActionListener
 		{public void actionPerformed(ActionEvent e){
 			if(!r.isPlaying()){
 				r.start();
-				r.getPanel().requestFocus();
+				r.getPanel().requestFocus(); // <- small improvement
 			}
 		}
 		});
 		r.start();	
 	}
+	
+	/* the method below is called in the driver to start the game, it is within a while
+	   loop within the driver itself and allows the score to update within the JLabel as
+	   the game runs */
 	
 	public void gameStart()
 	{
@@ -90,21 +76,4 @@ public class Game //implements ActionListener
 			scoreLabel.setText("Score: "+Integer.toString(r.getScore()));
 		}
 	}
-	
-	/*public void actionPerformed(ActionEvent e)
-	{
-		
-			if (e.getSource() == playButton)
-			{ if(!r.isPlaying()){
-				r.start();
-				}
-			}
-				
-			if (e.getSource() == stopButton)
-			{ 
-				if(r.isPlaying())
-					r.stop();
-			}
-		
-	}*/
 }

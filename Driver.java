@@ -7,11 +7,12 @@ public class Driver
 	public static void main(String[ ] args)
 	{
 		Game g = new Game();
+		ScoreWindow sw = new ScoreWindow();
 		
 		while(true)
 		{
 			g.gameStart();
-			// g.scoreWindowOpen();
+			sw.scoreWindowOpen();
 		}
 	}
 }
